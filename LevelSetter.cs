@@ -4,13 +4,68 @@ using UnityEngine;
 
 public class LevelSetter : MonoBehaviour
 {
-    public AxialCoord currentCoord;
+    private AxialCoord currentCoord = new AxialCoord(0,0,0);
     private RaycastHit ray;
 
-    public void MovePointer()
+    public void MoveRight()
     {
-        //Move pointer to specific area or by grid.
-        throw new System.NotImplementedException();
+        Vector2 moveAmount = new Vector2(1, 0);
+        MovePointer(moveAmount);
+    }
+
+    public void MoveLeft()
+    {
+        Vector2 moveAmount = new Vector2(-1, 0);
+        MovePointer(moveAmount);
+    }
+
+    public void MoveUp()
+    {
+        Vector2 moveAmount = new Vector2(0, -1);
+        MovePointer(moveAmount);
+    }
+
+    public void MoveDown()
+    {
+        Vector2 moveAmount = new Vector2(0, 1);
+        MovePointer(moveAmount);
+    }
+
+    private bool CheckEdge(Vector2 moveAmount)
+    {
+        //Debug.Log(currentCoord.x + moveAmount.x + " - " + (currentCoord.y + moveAmount.y));
+        if (currentCoord.y + moveAmount.y < 0 ||
+            currentCoord.y + moveAmount.y > LevelEditor.instance.column) { return false; }
+
+        //Debug.Log(0 - currentCoord.y / 2);
+        //Debug.Log(LevelEditor.instance.row - currentCoord.y / 2);
+        
+        if (currentCoord.x + moveAmount.x < 0 - currentCoord.y / 2 ||
+            currentCoord.x + moveAmount.x > LevelEditor.instance.row - currentCoord.y / 2) { return false; }
+
+        //Debug.Log("Not an edge");
+        return true;
+    }
+
+    private void MovePointer(Vector2 moveAmount)
+    {
+        if (!CheckEdge(moveAmount)) { return; }
+        currentCoord.x += (int)moveAmount.x;
+        currentCoord.y += (int)moveAmount.y;
+        RefreshSetter();
+    }
+
+    private void RefreshSetter()
+    {
+        transform.position = new Vector3(
+            LevelEditor.instance.xInterval * (currentCoord.x + currentCoord.y / 2)
+            , 0
+            , LevelEditor.instance.yInterval * -currentCoord.y);
+
+        if(currentCoord.x % 2 == 1)
+        {
+            transform.Translate(new Vector2(LevelEditor.instance.xInterval * 0.5f,0));
+        }
     }
 
     public void SetTileToPointer()

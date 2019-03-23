@@ -8,27 +8,42 @@ public class HexTile : MonoBehaviour
     //public Graphical Component.
 }
 
-//[System.Serializable]
-public struct AxialCoord
+public class AxialCoord
 {
-    private int x;
-    private int y;
-    private int z;
+    private int _x;
+    private int _y;
+    private int _z;
+
+    public int x
+    {
+        get { return _x; }
+        set { _x = value; }
+    }
+    public int y
+    {
+        get { return _y; }
+        set { _y = value; }
+    }
+    public int z
+    {
+        get { return _z; }
+        set { _z = value; }
+    }
 
     public AxialCoord(int x, int y, int z)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this._x = x;
+        this._y = y;
+        this._z = z;
     }
 
     public Vector2 GetAxial()
     {
-        return new Vector2(x, y);
+        return new Vector2(_x, _y);
     }
 
     public Vector3 GetCube()
     {
-        return new Vector3(x, y, z);
+        return new Vector3(_x, _y, _z);
     }
 }

@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEditor;
 
 public class LevelEditor : MonoBehaviour
 {
-    private static LevelEditor _levelEditor;
-    public static LevelEditor levelEditor
+    private static LevelEditor _instance;
+    public static LevelEditor instance
     {
         get{
-            if(_levelEditor == null){
-                _levelEditor = FindObjectOfType<LevelEditor>();
+            if(_instance == null){
+                _instance = FindObjectOfType<LevelEditor>();
             }
-            return _levelEditor;
+            return _instance;
         }
     }
 
@@ -20,6 +19,20 @@ public class LevelEditor : MonoBehaviour
     public int row;
     public int column;
     public float sideLength;
+    public float xInterval
+    {
+        get
+        {
+            return (float)Math.Sqrt(3) * sideLength;
+        }
+    }
+    public float yInterval
+    {
+        get
+        {
+            return sideLength * 1.5f;
+        }
+    }
 
     private HexTile[,] tiles;
 

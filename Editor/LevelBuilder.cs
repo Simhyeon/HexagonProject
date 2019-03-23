@@ -1,0 +1,30 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEditor;
+
+[CustomEditor(typeof(LevelSetter))]
+public class LevelBuilder : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        LevelSetter myScript = (LevelSetter)target;
+        if (GUILayout.Button("Move Right"))
+        {
+            myScript.MoveRight();
+        }
+        if (GUILayout.Button("Move Left"))
+        {
+            myScript.MoveLeft();
+        }
+        if (GUILayout.Button("Move Up"))
+        {
+            myScript.MoveUp();
+        }
+        if (GUILayout.Button("Move Down"))
+        {
+            myScript.MoveDown();
+        }
+    }
+}
