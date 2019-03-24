@@ -15,6 +15,20 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private GridMap _gridMap;
+    public GridMap gridMap
+    {
+        get
+        {
+            if(_gridMap == null)
+            {
+                _gridMap = FindObjectOfType<GridMap>() as GridMap;
+            }
+            return _gridMap;
+        }
+    }
+
     public GameObject defaultGrid;
     public int row;
     public int column;
@@ -36,9 +50,41 @@ public class LevelEditor : MonoBehaviour
 
     private HexTile[,] tiles;
 
-    private void OnEnable()
+    private void OnValidate()
     {
+        GetComponentInChildren<LevelSetter>().transform.position = new Vector3(0, 0, 0);
         tiles = new HexTile[row, column];
+    }
+    
+    public void DrawGrids()
+    {
+        ResetGrids();
+
+        Debug.Log("Draw Grids");
+        Vector3 point;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < column; j++)
+            {
+                point = new Vector3(
+                    LevelEditor.instance.xInterval * j
+                    , 0
+                    , LevelEditor.instance.yInterval * -i);
+                if(i % 2 == 1)
+                {
+                    point.x += LevelEditor.instance.xInterval * 0.5f;
+                }
+                Instantiate(defaultGrid, point, Quaternion.identity, gridMap.transform);
+            }
+        }
+    }
+
+    private void ResetGrids()
+    {
+        foreach (Transform child in gridMap.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private void Start()

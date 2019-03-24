@@ -9,49 +9,79 @@ public class LevelSetter : MonoBehaviour
 
     public void MoveRight()
     {
-        Vector2 moveAmount = new Vector2(1, 0);
+        Vector3 moveAmount = new Vector3(1, 0,-1);
         MovePointer(moveAmount);
     }
 
     public void MoveLeft()
     {
-        Vector2 moveAmount = new Vector2(-1, 0);
+        Vector3 moveAmount = new Vector3(-1, 0, 1);
         MovePointer(moveAmount);
     }
 
+    //MoveUp and down has critical bug in it.
+
     public void MoveUp()
     {
-        Vector2 moveAmount = new Vector2(0, -1);
+        Vector3 moveAmount;
+        if (currentCoord.y % 2 == 1)
+        {
+            moveAmount = new Vector3(0, -1, 1);
+        }
+        else
+        {
+            moveAmount = new Vector3(1, -1, 0);
+        }
         MovePointer(moveAmount);
     }
 
     public void MoveDown()
     {
-        Vector2 moveAmount = new Vector2(0, 1);
+        Vector3 moveAmount;
+        if (currentCoord.y % 2 == 0)
+        {
+            moveAmount = new Vector3(0, 1, -1);
+        }
+        else
+        {
+            moveAmount = new Vector3(-1, 1, 0);
+        }
         MovePointer(moveAmount);
     }
 
-    private bool CheckEdge(Vector2 moveAmount)
+    private bool CheckEdge(Vector3 moveAmount)
     {
         //Debug.Log(currentCoord.x + moveAmount.x + " - " + (currentCoord.y + moveAmount.y));
         if (currentCoord.y + moveAmount.y < 0 ||
-            currentCoord.y + moveAmount.y > LevelEditor.instance.column) { return false; }
+            currentCoord.y + moveAmount.y >= LevelEditor.instance.column)
+        {
+            //Debug.Log("y Edge : " + (currentCoord.y + moveAmount.y));
+            return false;
+        }
 
         //Debug.Log(0 - currentCoord.y / 2);
         //Debug.Log(LevelEditor.instance.row - currentCoord.y / 2);
         
-        if (currentCoord.x + moveAmount.x < 0 - currentCoord.y / 2 ||
-            currentCoord.x + moveAmount.x > LevelEditor.instance.row - currentCoord.y / 2) { return false; }
-
+        if (currentCoord.x + moveAmount.x < 0 - (currentCoord.y + (int)moveAmount.y) / 2 ||
+            currentCoord.x + moveAmount.x >= LevelEditor.instance.row - (currentCoord.y + (int)moveAmount.y) / 2)
+        {
+            //Debug.Log("x Edge : " + (currentCoord.x + moveAmount.x));
+            //Debug.Log("currentCoord.y + moveAmount.y is :" + (currentCoord.y + (int)moveAmount.y) + "and /2 is" + (currentCoord.y + (int)moveAmount.y) / 2);
+            //Debug.Log((0 - (currentCoord.y + (int)moveAmount.y) / 2) + "from ~ to " + (LevelEditor.instance.row - (currentCoord.y + (int)moveAmount.y) / 2));
+            return false;
+        }
         //Debug.Log("Not an edge");
         return true;
     }
 
-    private void MovePointer(Vector2 moveAmount)
+    private void MovePointer(Vector3 moveAmount)
     {
         if (!CheckEdge(moveAmount)) { return; }
         currentCoord.x += (int)moveAmount.x;
         currentCoord.y += (int)moveAmount.y;
+        currentCoord.z += (int)moveAmount.z;
+
+        Debug.Log(currentCoord);
         RefreshSetter();
     }
 
@@ -62,8 +92,9 @@ public class LevelSetter : MonoBehaviour
             , 0
             , LevelEditor.instance.yInterval * -currentCoord.y);
 
-        if(currentCoord.x % 2 == 1)
+        if(currentCoord.y % 2 == 1)
         {
+            //Debug.Log("On even line");
             transform.Translate(new Vector2(LevelEditor.instance.xInterval * 0.5f,0));
         }
     }

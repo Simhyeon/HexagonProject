@@ -30,6 +30,11 @@ public class AxialCoord
         set { _z = value; }
     }
 
+    public override string ToString()
+    {
+        return "x : " + x + " y :" + y;
+    }
+
     public AxialCoord(int x, int y, int z)
     {
         this._x = x;

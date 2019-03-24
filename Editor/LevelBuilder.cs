@@ -10,18 +10,20 @@ public class LevelBuilder : Editor
         DrawDefaultInspector();
 
         LevelSetter myScript = (LevelSetter)target;
-        if (GUILayout.Button("Move Right"))
-        {
-            myScript.MoveRight();
-        }
-        if (GUILayout.Button("Move Left"))
-        {
-            myScript.MoveLeft();
-        }
         if (GUILayout.Button("Move Up"))
         {
             myScript.MoveUp();
         }
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Move Left"))
+        {
+            myScript.MoveLeft();
+        }
+        if (GUILayout.Button("Move Right"))
+        {
+            myScript.MoveRight();
+        }
+        GUILayout.EndHorizontal();
         if (GUILayout.Button("Move Down"))
         {
             myScript.MoveDown();
