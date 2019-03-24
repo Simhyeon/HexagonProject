@@ -58,25 +58,28 @@ public class LevelEditor : MonoBehaviour
     
     public void DrawGrids()
     {
-        ResetGrids();
+        Debug.Log("Currently on working");
+        return;
 
-        Debug.Log("Draw Grids");
-        Vector3 point;
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < column; j++)
-            {
-                point = new Vector3(
-                    LevelEditor.instance.xInterval * j
-                    , 0
-                    , LevelEditor.instance.yInterval * -i);
-                if(i % 2 == 1)
-                {
-                    point.x += LevelEditor.instance.xInterval * 0.5f;
-                }
-                Instantiate(defaultGrid, point, Quaternion.identity, gridMap.transform);
-            }
-        }
+        //ResetGrids();
+
+        //Debug.Log("Draw Grids");
+        //Vector3 point;
+        //for (int i = 0; i < row; i++)
+        //{
+        //    for (int j = 0; j < column; j++)
+        //    {
+        //        point = new Vector3(
+        //            LevelEditor.instance.xInterval * j
+        //            , 0
+        //            , LevelEditor.instance.yInterval * -i);
+        //        if(i % 2 == 1)
+        //        {
+        //            point.x += LevelEditor.instance.xInterval * 0.5f;
+        //        }
+        //        Instantiate(defaultGrid, point, Quaternion.identity, gridMap.transform);
+        //    }
+        //}
     }
 
     private void ResetGrids()

@@ -5,6 +5,13 @@ using UnityEngine;
 public class LevelSetter : MonoBehaviour
 {
     private AxialCoord currentCoord = new AxialCoord(0,0,0);
+    public AxialCoord coord
+    {
+        get
+        {
+            return currentCoord;
+        }
+    }
     private RaycastHit ray;
 
     public void MoveRight()

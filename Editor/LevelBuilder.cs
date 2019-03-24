@@ -10,6 +10,7 @@ public class LevelBuilder : Editor
         DrawDefaultInspector();
 
         LevelSetter myScript = (LevelSetter)target;
+        GUILayout.Label(myScript.coord.ToString());
         if (GUILayout.Button("Move Up"))
         {
             myScript.MoveUp();

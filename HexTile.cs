@@ -32,7 +32,7 @@ public class AxialCoord
 
     public override string ToString()
     {
-        return "x : " + x + " y :" + y;
+        return "[x : " + x + "] | [y : " + y + "]";
     }
 
     public AxialCoord(int x, int y, int z)
@@ -50,5 +50,10 @@ public class AxialCoord
     public Vector3 GetCube()
     {
         return new Vector3(_x, _y, _z);
+    }
+
+    public string GetCubeString()
+    {
+        return "[x : " + x + "] | [y : " + y + "] | [z : " + z + "]";
     }
 }
