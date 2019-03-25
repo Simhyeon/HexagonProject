@@ -12,7 +12,7 @@ public class LevelSetter : MonoBehaviour
             return currentCoord;
         }
     }
-    private RaycastHit ray;
+    private RaycastHit hit;
 
     private void OnValidate()
     {
@@ -127,6 +127,15 @@ public class LevelSetter : MonoBehaviour
 
     private bool CheckEmpty()
     {
+        Ray ray = Camera.main.ScreenPointToRay(transform.position);
+        if (Physics.Raycast(ray, out hit, 100.0f))
+        {
+            if(hit.collider.tag == "Tile")
+            {
+                //Check Enum or some value of tile, if empty assign something.
+                //if(hit.collider.GetComponent<HexTile>())
+            }
+        }
         //Raycast and find if there is alreay something in there.
         return false;
     }
