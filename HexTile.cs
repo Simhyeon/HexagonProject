@@ -42,6 +42,13 @@ public class AxialCoord
         this._z = z;
     }
 
+    public void SetCoord(Vector3 value)
+    {
+        x = (int)value.x;
+        y = (int)value.y;
+        z = (int)value.z;
+    }
+
     public Vector2 GetAxial()
     {
         return new Vector2(_x, _y);

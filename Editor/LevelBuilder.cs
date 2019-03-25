@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(LevelSetter))]
+//[CustomEditor(typeof(LevelSetter))]
+[System.Obsolete]
 public class LevelBuilder : Editor
 {
     public override void OnInspectorGUI()

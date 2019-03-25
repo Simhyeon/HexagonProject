@@ -14,21 +14,8 @@ public class LevelEditor : MonoBehaviour
             return _instance;
         }
     }
-
-    [SerializeField]
-    private GridMap _gridMap;
-    public GridMap gridMap
-    {
-        get
-        {
-            if(_gridMap == null)
-            {
-                _gridMap = FindObjectOfType<GridMap>() as GridMap;
-            }
-            return _gridMap;
-        }
-    }
-
+    public LevelSetter pointer;
+    
     public GameObject defaultGrid;
     public int row;
     public int column;
@@ -52,43 +39,89 @@ public class LevelEditor : MonoBehaviour
 
     private void OnValidate()
     {
+        //if(transform.eulerAngles.x != 0) { Debug.LogError("Set Editor's x rotation to -90. Else script would not work as you expected."); }
+
         GetComponentInChildren<LevelSetter>().transform.position = new Vector3(0, 0, 0);
         tiles = new HexTile[row, column];
+
+        //Removed for Saftey reason.
+        //GetComponent<Grid>().cellSize = new Vector3(xInterval, sideLength * 2 , 0);
     }
     
-    public void DrawGrids()
+    //public void SwitchGrid()
+    //{
+    //    GetComponent<Grid>().enabled = !GetComponent<Grid>().enabled;
+    //}
+
+    public string DisplayCoord()
     {
-        Debug.Log("Currently on working");
-        return;
-
-        //ResetGrids();
-
-        //Debug.Log("Draw Grids");
-        //Vector3 point;
-        //for (int i = 0; i < row; i++)
-        //{
-        //    for (int j = 0; j < column; j++)
-        //    {
-        //        point = new Vector3(
-        //            LevelEditor.instance.xInterval * j
-        //            , 0
-        //            , LevelEditor.instance.yInterval * -i);
-        //        if(i % 2 == 1)
-        //        {
-        //            point.x += LevelEditor.instance.xInterval * 0.5f;
-        //        }
-        //        Instantiate(defaultGrid, point, Quaternion.identity, gridMap.transform);
-        //    }
-        //}
+        return pointer.coord.ToString();
+    }
+    
+    [System.Obsolete]
+    public void UpdateGrid()
+    {
+        GetComponent<Grid>().cellSize = new Vector3(xInterval, sideLength * 2, 0);
     }
 
-    private void ResetGrids()
+    public void ResetPointer()
     {
-        foreach (Transform child in gridMap.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        pointer.Reset();
     }
+
+    public void MovePointerRight()
+    {
+        pointer.MoveRight();
+    }
+
+    public void MovePointerLeft()
+    {
+        pointer.MoveLeft();
+    }
+
+    public void MovePointerUp()
+    {
+        pointer.MoveUp();
+    }
+
+    public void MovePointerDown()
+    {
+        pointer.MoveDown();
+    }
+
+    //public void DrawGrids()
+    //{
+    //    Debug.Log("Currently on working");
+    //    return;
+
+    //    //ResetGrids();
+
+    //    //Debug.Log("Draw Grids");
+    //    //Vector3 point;
+    //    //for (int i = 0; i < row; i++)
+    //    //{
+    //    //    for (int j = 0; j < column; j++)
+    //    //    {
+    //    //        point = new Vector3(
+    //    //            LevelEditor.instance.xInterval * j
+    //    //            , 0
+    //    //            , LevelEditor.instance.yInterval * -i);
+    //    //        if(i % 2 == 1)
+    //    //        {
+    //    //            point.x += LevelEditor.instance.xInterval * 0.5f;
+    //    //        }
+    //    //        Instantiate(defaultGrid, point, Quaternion.identity, gridMap.transform);
+    //    //    }
+    //    //}
+    //}
+
+    //private void ResetGrids()
+    //{
+    //    foreach (Transform child in gridMap.transform)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }
+    //}
 
     private void Start()
     {

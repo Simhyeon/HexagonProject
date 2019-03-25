@@ -14,6 +14,18 @@ public class LevelSetter : MonoBehaviour
     }
     private RaycastHit ray;
 
+    private void OnValidate()
+    {
+        Debug.Log("Do not change the transform of level editor gameobject");
+//        if (transform.eulerAngles.z != -90 && transform.eulerAngles.z != 270) { Debug.LogError("Set levelSetters's z rotation to -90. Else script would not work as you expected."); }
+    }
+
+    public void Reset()
+    {
+        coord.SetCoord(new Vector3(0, 0, 0));
+        RefreshSetter();
+    }
+
     public void MoveRight()
     {
         Vector3 moveAmount = new Vector3(1, 0,-1);
