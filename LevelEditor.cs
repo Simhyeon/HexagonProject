@@ -15,7 +15,8 @@ public class LevelEditor : MonoBehaviour
         }
     }
     public LevelSetter pointer;
-    
+
+    public GameObject Tiles;
     public GameObject defaultGrid;
     public int row;
     public int column;
@@ -89,39 +90,38 @@ public class LevelEditor : MonoBehaviour
         pointer.MoveDown();
     }
 
-    //public void DrawGrids()
-    //{
-    //    Debug.Log("Currently on working");
-    //    return;
+    public void DrawGrids()
+    {
+        Debug.LogError("Currently on Working");
+        Debug.LogError("Shoul draw grids according to grid size.");
+        ResetGrids();
 
-    //    //ResetGrids();
+        Debug.Log("Draw Grids");
+        Vector3 point;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < column; j++)
+            {
+                point = new Vector3(
+                    LevelEditor.instance.xInterval * j
+                    , 0
+                    , LevelEditor.instance.yInterval * -i);
+                if (i % 2 == 1)
+                {
+                    point.x += LevelEditor.instance.xInterval * 0.5f;
+                }
+                Instantiate(defaultGrid, point, Quaternion.identity, Tiles.transform);
+            }
+        }
+    }
 
-    //    //Debug.Log("Draw Grids");
-    //    //Vector3 point;
-    //    //for (int i = 0; i < row; i++)
-    //    //{
-    //    //    for (int j = 0; j < column; j++)
-    //    //    {
-    //    //        point = new Vector3(
-    //    //            LevelEditor.instance.xInterval * j
-    //    //            , 0
-    //    //            , LevelEditor.instance.yInterval * -i);
-    //    //        if(i % 2 == 1)
-    //    //        {
-    //    //            point.x += LevelEditor.instance.xInterval * 0.5f;
-    //    //        }
-    //    //        Instantiate(defaultGrid, point, Quaternion.identity, gridMap.transform);
-    //    //    }
-    //    //}
-    //}
-
-    //private void ResetGrids()
-    //{
-    //    foreach (Transform child in gridMap.transform)
-    //    {
-    //        Destroy(child.gameObject);
-    //    }
-    //}
+    private void ResetGrids()
+    {
+        foreach (Transform child in Tiles.transform)
+        {
+            DestroyImmediate(child.gameObject);
+        }
+    }
 
     private void Start()
     {

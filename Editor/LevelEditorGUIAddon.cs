@@ -39,6 +39,11 @@ public class LevelEditorGUIAddon : Editor
         {
             myScript.ResetPointer();
         }
+
+        if (GUILayout.Button("Draw Grid"))
+        {
+            myScript.DrawGrids();
+        }
         //GUILayout.Space(10f);
         //if(GUILayout.Button("Update Grid"))
         //{
