@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -14,7 +15,6 @@ public class LevelEditor : MonoBehaviour
             return _instance;
         }
     }
-    public LevelSetter pointer;
 
     public GameObject Tiles;
     public GameObject defaultGrid;
@@ -41,59 +41,15 @@ public class LevelEditor : MonoBehaviour
     private void OnValidate()
     {
         //if(transform.eulerAngles.x != 0) { Debug.LogError("Set Editor's x rotation to -90. Else script would not work as you expected."); }
-
-        GetComponentInChildren<LevelSetter>().transform.position = new Vector3(0, 0, 0);
+        
         tiles = new HexTile[row, column];
 
         //Removed for Saftey reason.
         //GetComponent<Grid>().cellSize = new Vector3(xInterval, sideLength * 2 , 0);
     }
     
-    //public void SwitchGrid()
-    //{
-    //    GetComponent<Grid>().enabled = !GetComponent<Grid>().enabled;
-    //}
-
-    public string DisplayCoord()
-    {
-        return pointer.coord.ToString();
-    }
-    
-    [System.Obsolete]
-    public void UpdateGrid()
-    {
-        GetComponent<Grid>().cellSize = new Vector3(xInterval, sideLength * 2, 0);
-    }
-
-    public void ResetPointer()
-    {
-        pointer.Reset();
-    }
-
-    public void MovePointerRight()
-    {
-        pointer.MoveRight();
-    }
-
-    public void MovePointerLeft()
-    {
-        pointer.MoveLeft();
-    }
-
-    public void MovePointerUp()
-    {
-        pointer.MoveUp();
-    }
-
-    public void MovePointerDown()
-    {
-        pointer.MoveDown();
-    }
-
     public void DrawGrids()
     {
-        Debug.LogError("Currently on Working");
-        Debug.LogError("Shoul draw grids according to grid size.");
         ResetGrids();
 
         Debug.Log("Draw Grids");
@@ -103,29 +59,24 @@ public class LevelEditor : MonoBehaviour
             for (int j = 0; j < column; j++)
             {
                 point = new Vector3(
-                    LevelEditor.instance.xInterval * j
+                    xInterval * j
                     , 0
-                    , LevelEditor.instance.yInterval * -i);
+                    , yInterval * -i);
                 if (i % 2 == 1)
                 {
-                    point.x += LevelEditor.instance.xInterval * 0.5f;
+                    point.x += xInterval * 0.5f;
                 }
                 Instantiate(defaultGrid, point, Quaternion.identity, Tiles.transform);
             }
         }
     }
 
-    private void ResetGrids()
+    public void ResetGrids()
     {
-        foreach (Transform child in Tiles.transform)
+        if(Tiles.transform.childCount == 0) { return; }
+        for (int i = Tiles.transform.childCount; i > 0; --i)
         {
-            DestroyImmediate(child.gameObject);
+            DestroyImmediate(Tiles.transform.GetChild(0).gameObject);
         }
-    }
-
-    private void Start()
-    {
-        GetComponentInChildren<LevelSetter>().gameObject.SetActive(false);
-        //And Make Static 2d array or arrays of arrays or just give tiles array to some other place. 
     }
 }

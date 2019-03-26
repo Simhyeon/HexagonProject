@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public class LevelSetter : MonoBehaviour
 {
     private AxialCoord currentCoord = new AxialCoord(0,0,0);
