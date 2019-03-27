@@ -11,6 +11,9 @@ public class LevelEditorGUIAddon : Editor
         base.OnInspectorGUI();
 
         LevelEditor myScript = (LevelEditor)target;
+        GUILayout.Space(10f);
+        GUILayout.Label("Confirm Status : " +  myScript.isConfirmed.ToString(), EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Draw Grid"))
         {
             myScript.DrawGrids();
@@ -19,5 +22,10 @@ public class LevelEditorGUIAddon : Editor
         {
             myScript.ResetGrids();
         }
+        if (GUILayout.Button("Confirm Map"))
+        {
+            myScript.ConfirmLevel();
+        }
+        GUILayout.EndHorizontal();
     }
 }

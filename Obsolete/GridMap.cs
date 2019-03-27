@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public class GridMap : MonoBehaviour
 {
     private static GridMap _instance;

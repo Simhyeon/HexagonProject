@@ -18,6 +18,8 @@ public class LevelEditor : MonoBehaviour
 
     public GameObject Tiles;
     public GameObject defaultGrid;
+    public bool isConfirmed { get; private set; } //Check how can I maintain this value over hard shutdown.
+
     public int row;
     public int column;
     public float sideLength;
@@ -35,21 +37,10 @@ public class LevelEditor : MonoBehaviour
             return sideLength * 1.5f;
         }
     }
-
-    private HexTile[,] tiles;
-
-    private void OnValidate()
-    {
-        //if(transform.eulerAngles.x != 0) { Debug.LogError("Set Editor's x rotation to -90. Else script would not work as you expected."); }
-        
-        tiles = new HexTile[row, column];
-
-        //Removed for Saftey reason.
-        //GetComponent<Grid>().cellSize = new Vector3(xInterval, sideLength * 2 , 0);
-    }
     
     public void DrawGrids()
     {
+        //SetToChanged() //Duplicate with resetGrids
         ResetGrids();
 
         Debug.Log("Draw Grids");
@@ -73,10 +64,23 @@ public class LevelEditor : MonoBehaviour
 
     public void ResetGrids()
     {
-        if(Tiles.transform.childCount == 0) { return; }
+        SetToChanged();
+
+        if (Tiles.transform.childCount == 0) { return; }
         for (int i = Tiles.transform.childCount; i > 0; --i)
         {
             DestroyImmediate(Tiles.transform.GetChild(0).gameObject);
         }
+    }
+
+    private void SetToChanged()
+    {
+        isConfirmed = false;
+    }
+
+    public void ConfirmLevel()
+    {
+        isConfirmed = true;
+        throw new System.NotImplementedException();
     }
 }
