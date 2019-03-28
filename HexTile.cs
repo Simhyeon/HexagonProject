@@ -158,13 +158,5 @@ namespace AxialCoordinationSystem
         {
             return Tuple.Create(original.y, math.floor(original.x/2));
         }
-
-        public enum AxialOrigin
-        {
-            TopLeft,
-            TopRight,
-            DownLeft,
-            DownRight
-        }
     }
 }
