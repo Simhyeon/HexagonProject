@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using AxialCoordinationSystem;
 using UnityEngine;
 
+[System.Obsolete]
 public class LevelSetter : MonoBehaviour
 {
     private AxialCoord currentCoord = new AxialCoord(0,0,0);
@@ -93,15 +95,16 @@ public class LevelSetter : MonoBehaviour
         return true;
     }
 
+    [System.Obsolete]
     private void MovePointer(Vector3 moveAmount)
     {
-        if (!CheckEdge(moveAmount)) { return; }
-        currentCoord.x += (int)moveAmount.x;
-        currentCoord.y += (int)moveAmount.y;
-        currentCoord.z += (int)moveAmount.z;
+        //if (!CheckEdge(moveAmount)) { return; }
+        //currentCoord.x += (int)moveAmount.x;
+        //currentCoord.y += (int)moveAmount.y;
+        //currentCoord.z += (int)moveAmount.z;
 
-        Debug.Log(currentCoord);
-        RefreshSetter();
+        //Debug.Log(currentCoord);
+        //RefreshSetter();
     }
 
     private void RefreshSetter()
