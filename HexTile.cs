@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using AxialCoordinationSystem;
 using UnityEngine;
@@ -90,6 +91,26 @@ namespace AxialCoordinationSystem
         public string GetCubeString()
         {
             return "[x : " + x + "] | [y : " + y + "] | [z : " + z + "]";
+        }
+
+        public static AxialCoord operator +(AxialCoord a, AxialCoord b)
+        {
+            AxialCoord c = new AxialCoord();
+            c.x = a.x + b.x;
+            c.y = a.y + b.y;
+            c.z = a.z + b.z;
+            return c;
+        }
+
+        public static bool operator ==(AxialCoord a, AxialCoord b)
+        {
+            if(a.x == b.x &&
+                a.y == b.y &&
+                a.z == b.z)
+            {
+                    return true;
+            }
+            return false;
         }
     }
 
