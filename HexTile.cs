@@ -44,6 +44,8 @@ public class HexTile : MonoBehaviour
     }
 }
 
+// This namespace is highly aime for specific purposes and current build of game. 
+// So definitely not compatible with different hex system;
 namespace AxialCoordinationSystem
 {
     public class AxialCoord
@@ -93,14 +95,23 @@ namespace AxialCoordinationSystem
             return "[x : " + x + "] | [y : " + y + "] | [z : " + z + "]";
         }
 
-        public static AxialCoord operator +(AxialCoord a, AxialCoord b)
-        {
-            AxialCoord c = new AxialCoord();
-            c.x = a.x + b.x;
-            c.y = a.y + b.y;
-            c.z = a.z + b.z;
-            return c;
-        }
+        // public static AxialCoord operator +(AxialCoord a, AxialCoord b)
+        // {
+        //     AxialCoord c = new AxialCoord();
+        //     c.x = a.x + b.x;
+        //     c.y = a.y + b.y;
+        //     c.z = a.z + b.z;
+        //     return c;
+        // }
+
+        // public static AxialCoord operator -(AxialCoord a, AxialCoord b)
+        // {
+        //     AxialCoord c = new AxialCoord();
+        //     c.x = a.x - b.x;
+        //     c.y = a.y - b.y;
+        //     c.z = a.z - b.z;
+        //     return c;
+        // }
 
         public static bool operator ==(AxialCoord a, AxialCoord b)
         {
@@ -116,26 +127,42 @@ namespace AxialCoordinationSystem
 
     public static class AxialCoordMap
     {
-        public static AxialCoord[] GetSurroundingGrids(AxialCoord position, int range)
+        public int ManhattanDistance(AxialCoord start, AxialCoord end)
         {
-            throw new System.NotImplementedException();
+            return (abs(start.x - end.x) + abs(start.y - end.y) + abs(start.z - end.z)) / 2;
         }
 
+        public static AxialCoord[] GetGridsWithinRange(AxialCoord position, int range = 1)
+        {
+            List<AxialCoord> list = new List<AxialCoord>();
+            for(int x = -range; x +=1; x <= range)
+            {
+                for(int y =Math.Max(-range, -x-range); y+=1; y<=Math.Min(range, -x + range))
+                {
+                    int z = -x -y;
+                    list.Add(new AxialCoord(x,y,z));
+                }
+            }
+            return list.ToArray();
+        }
+
+        // This method might have to interact with hexTile to check if it is obstacle or not.
+        // So consider to move this code into some other class inside such as level manager.
         public static AxialCoord[] GetPath(AxialCoord start, AxialCoord goal)
         {
             throw new System.NotImplementedException();
         }
 
-        /// <summary>
-        /// Change matrix coord into axial coord. Only works for rectangular shape.
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        public static AxialCoord MatrixToAxial(int row, int column, AxialOrigin origin = AxialOrigin.TopLeft, bool fatOddLine = true)
-        {
-            throw new System.NotImplementedException();
-        }
+        // public static AxialCoord MatrixToAxial(int row, int column)
+        // {
+            
+        // }
+
+        // //Applied for 2d array map storage structure. Should be modified for array or arrays map storage structure.
+        // public static Tuple AxialToMatrix(AxialCoord original)
+        // {
+            
+        // }
 
         public enum AxialOrigin
         {

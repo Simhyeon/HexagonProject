@@ -18,7 +18,13 @@ public class LevelEditor : MonoBehaviour
 
     public GameObject Tiles;
     public GameObject defaultGrid;
+    //At the first time... do i need to conrfirm this?
+    //What if I just send tileArray on game start, into levelmanager
+    //LevelEditor is purely editor class and should not interact with level manager on edit time.
+    // Or just let confirm to be a pure meaning of confirmation so that editor can know that this map has been confirmed and no need to draw again.
+ 
     public bool isConfirmed { get; private set; } //Check how can I maintain this value over hard shutdown.
+    public HexTile[,] tileArray{get; private set;} //This information should be stored somewhere like... levelMap Class.
 
     public int row;
     public int column;
@@ -77,10 +83,26 @@ public class LevelEditor : MonoBehaviour
     {
         isConfirmed = false;
     }
-
+    //This method should be differenciated from somewhat send data method.
     public void ConfirmLevel()
     {
         isConfirmed = true;
-        throw new System.NotImplementedException();
+        HexTile[,] tiles = new HexTile[row, column];
+        HexTile iterated;
+        foreach(Transform child in transform)
+        {
+            iterated = child.GetComponent<HexTile>();
+            if(iterated == null)
+            {
+                Debug.LogError("Hextile not found : " + child.name);
+            }
+            if(!child.GetComponent<HexTile>().isRegistered)
+            {
+                Debug.LogError("Unregistered object found. : " + child.name);    
+            }
+
+            tiles[iterated.coordination.y, iterated.coordination.x] = iterated;
+        }
+        LevelManager.instance.tiles = tiles;
     }
 }
