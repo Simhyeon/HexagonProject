@@ -153,16 +153,11 @@ namespace AxialCoordinationSystem
             throw new System.NotImplementedException();
         }
 
-        // public static AxialCoord MatrixToAxial(int row, int column)
-        // {
-            
-        // }
-
         // //Applied for 2d array map storage structure. Should be modified for array or arrays map storage structure.
-        // public static Tuple AxialToMatrix(AxialCoord original)
-        // {
-            
-        // }
+        public static Tuple AxialToMatrix(AxialCoord original)
+        {
+            return Tuple.Create(original.y, math.floor(original.x/2));
+        }
 
         public enum AxialOrigin
         {
