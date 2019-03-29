@@ -113,13 +113,35 @@ namespace AxialCoordinationSystem
         //     return c;
         // }
 
-        public static bool operator ==(AxialCoord a, AxialCoord b)
+        //public static bool operator ==(AxialCoord a, AxialCoord b)
+        //{
+        //    if(a.x == b.x &&
+        //        a.y == b.y &&
+        //        a.z == b.z)
+        //    {
+        //            return true;
+        //    }
+        //    return false;
+        //}
+
+        //public static bool operator !=(AxialCoord a, AxialCoord b)
+        //{
+        //    if (a.x != b.x ||
+        //        a.y != b.y ||
+        //        a.z != b.z)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        
+        public bool Compare(AxialCoord compared)
         {
-            if(a.x == b.x &&
-                a.y == b.y &&
-                a.z == b.z)
+            if (x == compared.x &&
+                y == compared.y &&
+                z == compared.z)
             {
-                    return true;
+                return true;
             }
             return false;
         }
@@ -127,17 +149,17 @@ namespace AxialCoordinationSystem
 
     public static class AxialCoordMap
     {
-        public int ManhattanDistance(AxialCoord start, AxialCoord end)
+        public static int ManhattanDistance(AxialCoord start, AxialCoord end)
         {
-            return (abs(start.x - end.x) + abs(start.y - end.y) + abs(start.z - end.z)) / 2;
+            return (Math.Abs(start.x - end.x) + Math.Abs(start.y - end.y) + Math.Abs(start.z - end.z)) / 2;
         }
 
         public static AxialCoord[] GetGridsWithinRange(AxialCoord position, int range = 1)
         {
             List<AxialCoord> list = new List<AxialCoord>();
-            for(int x = -range; x +=1; x <= range)
+            for(int x = -range;  x <= range; x +=1)
             {
-                for(int y =Math.Max(-range, -x-range); y+=1; y<=Math.Min(range, -x + range))
+                for(int y = Math.Max(-range, -x-range); y<=Math.Min(range, -x + range); y += 1)
                 {
                     int z = -x -y;
                     list.Add(new AxialCoord(x,y,z));
@@ -148,15 +170,15 @@ namespace AxialCoordinationSystem
 
         // This method might have to interact with hexTile to check if it is obstacle or not.
         // So consider to move this code into some other class inside such as level manager.
-        public static AxialCoord[] GetPath(AxialCoord start, AxialCoord goal)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public static AxialCoord[] GetPath(AxialCoord start, AxialCoord goal)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
 
         // //Applied for 2d array map storage structure. Should be modified for array or arrays map storage structure.
-        public static Tuple AxialToMatrix(AxialCoord original)
+        public static Tuple<int, int> AxialToMatrix(AxialCoord original)
         {
-            return Tuple.Create(original.y, math.floor(original.x/2));
+            return Tuple.Create(original.y, original.x / 2);
         }
     }
 }

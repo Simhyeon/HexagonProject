@@ -84,7 +84,7 @@ public class LevelEditor : MonoBehaviour
         isConfirmed = true;
     }
 
-    public HexTile[] GetHexArray()
+    public HexTile[,] GetHexArray()
     {
         HexTile[,] tiles = new HexTile[row, column];
         HexTile iterated;
@@ -99,8 +99,8 @@ public class LevelEditor : MonoBehaviour
             {
                 Debug.LogError("Unregistered object found. : " + child.name);    
             }
-            var index = AxialCoordMap.AxialToMatrix(iterated);
-            tiles[index.item1, index.item2] = iterated;
+            var index = AxialCoordMap.AxialToMatrix(iterated.coordination);
+            tiles[index.Item1, index.Item2] = iterated;
         }
         return tiles;
     }

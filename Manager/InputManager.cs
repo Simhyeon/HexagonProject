@@ -17,10 +17,13 @@ public class InputManager : MonoBehaviour
         }
     }
     public bool inputAble;
-
-    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    Ray ray;
     RaycastHit hit;
 
+    private void Awake()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    }
     private void Update()
     {
         //Get MouseKeyDown 
@@ -28,11 +31,11 @@ public class InputManager : MonoBehaviour
         {
            if (Input.GetMouseButtonDown(0))
            {
-               if(physics.Raycast(ray, out hit))
+               if(Physics.Raycast(ray, out hit))
                {
                    if(hit.collider.tag == "Tile")
                    {
-                       Player.instance.MovePosition(hit.collider.getComponent<HexTile>().coordination);
+                       Player.instance.MovePosition(hit.collider.GetComponent<HexTile>().coordination);
                    }
                }
            }

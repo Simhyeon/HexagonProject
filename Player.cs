@@ -1,4 +1,5 @@
 using UnityEngine;
+using AxialCoordinationSystem;
 
 public class Player : MonoBehaviour 
 {
@@ -9,7 +10,7 @@ public class Player : MonoBehaviour
         {
             if(player == null)
             {
-                player = FindObjectOfType<InputManager>();
+                player = FindObjectOfType<Player>();
             }
 
             return player;
