@@ -19,6 +19,6 @@ public class Player : MonoBehaviour
 
     public void MovePosition(AxialCoord destination)
     {
-
+        throw new System.NotImplementedException();
     }
 }

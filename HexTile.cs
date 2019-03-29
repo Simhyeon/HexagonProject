@@ -176,6 +176,7 @@ namespace AxialCoordinationSystem
         //}
 
         // //Applied for 2d array map storage structure. Should be modified for array or arrays map storage structure.
+        // Also original.x/2 is equal to Math.floor value since c# deletes every digis after integer value. 
         public static Tuple<int, int> AxialToMatrix(AxialCoord original)
         {
             return Tuple.Create(original.y, original.x / 2);
