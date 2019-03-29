@@ -23,4 +23,9 @@ public class LevelManager : MonoBehaviour
     {
         tiles = levelTiles; //Immutable
     }
+
+    public void GetPath(AxialCoord start, AxialCoord end)
+    {
+        throw new System.NotImplementedException();
+    }
 }

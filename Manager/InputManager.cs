@@ -18,18 +18,24 @@ public class InputManager : MonoBehaviour
     }
     public bool inputAble;
 
-    //Ray ray;
-    //RaycastHit hit;
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    RaycastHit hit;
 
     private void Update()
     {
         //Get MouseKeyDown 
-        //if (inputAble)
-        //{
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-
-        //    }
-        //}
+        if (inputAble)
+        {
+           if (Input.GetMouseButtonDown(0))
+           {
+               if(physics.Raycast(ray, out hit))
+               {
+                   if(hit.collider.tag == "Tile")
+                   {
+                       Player.instance.MovePosition(hit.collider.getComponent<HexTile>().coordination);
+                   }
+               }
+           }
+        }
     }
 }
