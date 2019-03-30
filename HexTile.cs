@@ -7,27 +7,28 @@ using UnityEngine;
 public class HexTile : MonoBehaviour
 {
     public bool isRegistered;
-    public AxialCoord coordination { get; private set; }
+    public AxialCoord coordination;// { get; private set; }
     public GameObject structureParent; //Consider make this into private and serializeField
     public HexTileData data;
 
-    public void Register(AxialCoord coord)
+    public void Register(int row, int column)
     {
-        isRegistered = true;
-        if(coordination != null)
+        if(isRegistered != false)
         {
             Debug.LogError("Double register occured please check your process.");
             throw new System.InvalidOperationException();
         }
-        coordination = new AxialCoord(coord);
+        isRegistered = true;
+        coordination = AxialCoordMap.MatrixToAxial(row, column);
     }
 
     private void OnValidate()
     {
-        if(coordination != null)
-        {
-            Debug.LogError("You should not change axial coordination value of the tile on editor.");
-        }
+        // Change Draw method first.
+        //if(coordination != null)
+        //{
+        //    Debug.LogError("You should not change axial coordination value of the tile on editor.");
+        //}
 
         if(data == null)
         {
@@ -48,11 +49,12 @@ public class HexTile : MonoBehaviour
 // So definitely not compatible with different hex system;
 namespace AxialCoordinationSystem
 {
+    [System.Serializable]
     public class AxialCoord
     {
-        public int x { get; private set; }
-        public int y { get; private set; }
-        public int z { get; private set; }
+        public int x;// { get; private set; }
+        public int y;// { get; private set; }
+        public int z;// { get; private set; }
 
         public override string ToString()
         {
@@ -64,6 +66,13 @@ namespace AxialCoordinationSystem
             x = coord.x;
             y = coord.y;
             z = coord.z;
+        }
+
+        public AxialCoord(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+            z = -x - y;
         }
 
         public AxialCoord(int x, int y, int z)
@@ -177,9 +186,14 @@ namespace AxialCoordinationSystem
 
         // //Applied for 2d array map storage structure. Should be modified for array or arrays map storage structure.
         // Also original.x/2 is equal to Math.floor value since c# deletes every digis after integer value. 
+        public static AxialCoord MatrixToAxial(int row, int column)
+        {
+            return new AxialCoord(column - row/2 , row);
+        }
+
         public static Tuple<int, int> AxialToMatrix(AxialCoord original)
         {
-            return Tuple.Create(original.y, original.x / 2);
+            return Tuple.Create(original.y, original.x + original.y / 2);
         }
     }
 }

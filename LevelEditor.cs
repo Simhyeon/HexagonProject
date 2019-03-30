@@ -17,7 +17,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
-    public GameObject Tiles;
+    public GameObject tilesParent;
     public GameObject defaultGrid;
     public bool isConfirmed { get; private set; } //Check how can I maintain this value over hard shutdown.
 
@@ -58,7 +58,8 @@ public class LevelEditor : MonoBehaviour
                 {
                     point.x += xInterval * 0.5f;
                 }
-                Instantiate(defaultGrid, point, Quaternion.identity, Tiles.transform);
+                GameObject tile = Instantiate(defaultGrid, point, Quaternion.identity, tilesParent.transform);
+                tile.GetComponent<HexTile>().Register(i,j);
             }
         }
     }
@@ -67,10 +68,10 @@ public class LevelEditor : MonoBehaviour
     {
         SetToChanged();
 
-        if (Tiles.transform.childCount == 0) { return; }
-        for (int i = Tiles.transform.childCount; i > 0; --i)
+        if (tilesParent.transform.childCount == 0) { return; }
+        for (int i = tilesParent.transform.childCount; i > 0; --i)
         {
-            DestroyImmediate(Tiles.transform.GetChild(0).gameObject);
+            DestroyImmediate(tilesParent.transform.GetChild(0).gameObject);
         }
     }
 
@@ -84,11 +85,16 @@ public class LevelEditor : MonoBehaviour
         isConfirmed = true;
     }
 
-    public HexTile[,] GetHexArray()
+    public HexTile[][] GetHexArray()
     {
-        HexTile[,] tiles = new HexTile[row, column];
+        HexTile[][] tiles = new HexTile[row][];
+        for (int i = 0; i < row; i++)
+        {
+            tiles[i] = new HexTile[column];
+        }
+
         HexTile iterated;
-        foreach(Transform child in transform)
+        foreach(Transform child in tilesParent.transform)
         {
             iterated = child.GetComponent<HexTile>();
             if(iterated == null)
@@ -100,7 +106,8 @@ public class LevelEditor : MonoBehaviour
                 Debug.LogError("Unregistered object found. : " + child.name);    
             }
             var index = AxialCoordMap.AxialToMatrix(iterated.coordination);
-            tiles[index.Item1, index.Item2] = iterated;
+            //Debug.Log(index.Item1 + " | " + index.Item2);
+            tiles[index.Item1][index.Item2] = iterated;
         }
         return tiles;
     }

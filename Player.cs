@@ -15,10 +15,25 @@ public class Player : MonoBehaviour
 
             return player;
         }
-    } 
+    }
+    public int moveRange;
 
-    public void MovePosition(AxialCoord destination)
+    private void Start()
     {
-        throw new System.NotImplementedException();
+        DisplayMoveRange();
+    }
+
+    public void MovePosition(AxialCoord destination, bool straightMove = false)
+    {
+        if (straightMove)
+        {
+            transform.position = LevelManager.instance.GetTile(destination).transform.position;
+        }
+        DisplayMoveRange();
+    }
+
+    private void DisplayMoveRange()
+    {
+
     }
 }
