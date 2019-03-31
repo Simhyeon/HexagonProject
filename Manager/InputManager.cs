@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
                {
                    if (hit.collider.tag == "Tile")
                    {
-                        Debug.Log(hit.collider.GetComponent<HexTile>().coordination);
+                       //Debug.Log(hit.collider.GetComponent<HexTile>().coordination);
                        Player.instance.MovePosition(hit.collider.GetComponent<HexTile>().coordination, true);
                    }
                }
