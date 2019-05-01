@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class HexTile : MonoBehaviour
 {
-    public bool isRegistered;
+    public bool isRegistered; //Set to true when registered to level editor.
     public AxialCoord coordination;// { get; private set; }
     public GameObject structureParent; //Consider make this into private and serializeField
-    public HexTileData data;
+    public HexTileData data; //ScriptableObject of the tile. 
 
     private Material originalMaterial;
     public Material highlightedMaterial;
 
-    public bool isHighlighted { get; private set; }
+    public bool isHighlighted { get; private set; } //
     public bool isSteppable { get; private set; }
 
     private void Start()

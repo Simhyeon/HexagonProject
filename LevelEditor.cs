@@ -6,6 +6,7 @@ using UnityEditor;
 
 public class LevelEditor : MonoBehaviour
 {
+    //Singleton pattern
     private static LevelEditor _instance;
     public static LevelEditor instance
     {
@@ -17,20 +18,24 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
-    public GameObject tilesParent;
-    public GameObject defaultGrid;
+    public GameObject tilesParent; //Parent object for instantiation.
+    public GameObject defaultGrid; //Defulat grid to be instantiated
     public bool isConfirmed { get; private set; } //Check how can I maintain this value over hard shutdown.
+    // isConfirmed may be deleted in near future.
 
-    public int row;
-    public int column;
-    public float sideLength;
+    public int row; //row number
+    public int column; //column number
+    public float sideLength; //Length of the hextile.
+
+    //Interval between hexagon tiles' x position.
     public float xInterval
     {
         get
         {
-            return (float)Math.Sqrt(3) * sideLength;
+            return (float)Math.Sqrt(3) * sideLength; 
         }
     }
+    //Interval between hexagon tiles' y position.
     public float yInterval
     {
         get
@@ -39,9 +44,10 @@ public class LevelEditor : MonoBehaviour
         }
     }
     
+    //Draw grids according to intervals, rows and columns. Which is meant to be fitted each other well.
     public void DrawGrids()
     {
-        //SetToChanged() //Duplicate with resetGrids
+        //SetToChanged() // Deleted this setence becuase of Duplicate with resetGrids methods.
         ResetGrids();
 
         Debug.Log("Draw Grids");
@@ -64,6 +70,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
+    //Reset Grids to nothing. Called on drawgrids and can be called manually.
     public void ResetGrids()
     {
         SetToChanged();

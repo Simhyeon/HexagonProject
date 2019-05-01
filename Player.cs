@@ -3,6 +3,7 @@ using AxialCoordinationSystem;
 
 public class Player : MonoBehaviour 
 {
+    //Singleton
     private static Player player;
     public static Player instance
     {
@@ -16,8 +17,8 @@ public class Player : MonoBehaviour
             return player;
         }
     }
-    public AxialCoord playerPosition;
-    public int moveRange;
+    public AxialCoord playerPosition; //Player's position.
+    public int moveRange; //Move range that player can move.
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
         DisplayMoveRange();
     }
 
+    //Show range of player's movement with graphics.
     private void DisplayMoveRange()
     {
         LevelManager.instance.DisplayRange(playerPosition, moveRange);

@@ -133,9 +133,20 @@ namespace AxialCoordinationSystem
         {
             return (Math.Abs(start.x - end.x) + Math.Abs(start.y - end.y) + Math.Abs(start.z - end.z)) / 2;
         }
-
+        //Get every grids within range from center.
         public static AxialCoord[] GetGridsWithinRange(AxialCoord position, int range = 1)
         {
+            List<AxialCoord> list = new List<AxialCoord>();
+            for (int x = - range; x <= range; x++)
+            {
+                for (int y = Math.Max(-range, -x - range); y <= Math.Min(+range, -x + range); y += 1)
+                {
+                    int z = -x - y;
+                    list.Add(new AxialCoord(x + position.x, y + position.y, z + position.z));
+                }
+            }
+            return list.ToArray();
+           
             //List<AxialCoord> list = new List<AxialCoord>();
             //for (int x = position.x - range; x <= position.x + range; x++)
             //{
@@ -152,16 +163,6 @@ namespace AxialCoordinationSystem
             //}
             //return list.ToArray();
             
-            List<AxialCoord> list = new List<AxialCoord>();
-            for (int x = - range; x <= range; x++)
-            {
-                for (int y = Math.Max(-range, -x - range); y <= Math.Min(+range, -x + range); y += 1)
-                {
-                    int z = -x - y;
-                    list.Add(new AxialCoord(x + position.x, y + position.y, z + position.z));
-                }
-            }
-            return list.ToArray();
         }
 
         // This method might have to interact with hexTile to check if it is obstacle or not.
@@ -181,6 +182,21 @@ namespace AxialCoordinationSystem
         public static Tuple<int, int> AxialToMatrix(AxialCoord original)
         {
             return Tuple.Create(original.y, original.x + original.y / 2);
+        }
+    }
+
+    public class AxialCoordNode
+    {
+        public AxialCoordNode(int x, int y)
+        {
+            coordination = new AxialCoord(x, y);
+        }
+        public AxialCoord coordination{get; private set;}
+        public AxialCoordNode parentNode{get; private set;}
+
+        public void SetParent(AxialCoordNode parent)
+        {
+            parentNode = parent;
         }
     }
 }
